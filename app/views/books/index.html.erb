@@ -1,0 +1,14 @@
+<h1>Welcome to the Book List</h1>
+
+<p><%= "I am shouting this sentence".upcase %></p>
+
+<p>There are <%= @books.length %> books available to checkout</p>
+
+<ul>
+  <% @books.each do |book| %>
+    <li>
+      <strong><%= book[:title] %></strong>
+      by <%= book[:author] %>
+    </li>
+  <% end %>
+</ul>
