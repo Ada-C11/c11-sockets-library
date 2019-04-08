@@ -4,6 +4,16 @@
 
 <p>There are <%= @books.length %> books available to checkout</p>
 
+<section class="featured-book">
+  <% if @featured_book %>
+    <p>
+      Featured book: <%= @featured_book[:title] %> by <%= @featured_book[:author] %>
+    </p>
+  <% else %>
+    <p>No featured book today :(</p>
+  <% end %>
+</section>
+
 <ul>
   <% @books.each do |book| %>
     <li>
