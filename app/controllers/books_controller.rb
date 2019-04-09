@@ -20,7 +20,7 @@ class BooksController < ApplicationController
     puts "Result of .to_i: #{book_id.to_i}"
     # binding.pry
 
-    does_not_exist
+    # does_not_exist
 
     @book = BOOKS[book_id.to_i]
     # @book = Book.find(book_id)
