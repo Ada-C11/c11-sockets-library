@@ -1,15 +1,9 @@
 
 
 class BooksController < ApplicationController
-  BOOKS = [
-    {title: "Hidden Figures", author: "Margot Lee Shetterly"},
-    {title: "Practical Object-Oriented Design in Ruby", author: "Sandi Metz"},
-    {title: "Kindred", author: "Octavia E. Butler"},
-  ]
-
   def index
     # Load a list of books from somewhere
-    @books = BOOKS # Book.all
+    @books = Book.all
 
     @featured_book = @books.sample
   end
@@ -22,8 +16,7 @@ class BooksController < ApplicationController
 
     # does_not_exist
 
-    @book = BOOKS[book_id.to_i]
-    # @book = Book.find(book_id)
+    @book = Book.find_by(id: book_id)
 
     unless @book
       head :not_found

@@ -4,6 +4,7 @@ describe BooksController do
   describe "index" do
     it "renders without crashing" do
       # Arrange
+      Book.create!(title: "test book")
 
       # Act
       get "/books"
@@ -13,11 +14,8 @@ describe BooksController do
     end
 
     it "renders even if there are zero books" do
-      skip
       # Arrange
-      # TODO get rid of the books
-      BooksController::BOOKS.clear
-      # Book.destroy_all
+      Book.destroy_all
 
       # Act
       get "/books"
@@ -38,11 +36,14 @@ describe BooksController do
     end
 
     it "works for a book that exists" do
-      # TODO come back to this
-      book_id = 0
+      # Arrange: set up a book
+      book = Book.create!(title: "test book")
 
-      get "/books/#{book_id}"
+      # Act: Hey server, can you find the book
+      # that we just made
+      get "/books/#{book.id}"
 
+      # Assert
       must_respond_with :ok
     end
   end

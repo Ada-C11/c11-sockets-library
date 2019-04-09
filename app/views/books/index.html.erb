@@ -7,7 +7,7 @@
 <section class="featured-book">
   <% if @featured_book %>
     <p>
-      Featured book: <%= @featured_book[:title] %> by <%= @featured_book[:author] %>
+      Featured book: <%= @featured_book.title %> by <%= @featured_book.author %>
     </p>
   <% else %>
     <p>No featured book today :(</p>
@@ -17,8 +17,8 @@
 <ul>
   <% @books.each do |book| %>
     <li>
-      <strong><%= book[:title] %></strong>
-      by <%= book[:author] %>
+      <strong><%= book.title %></strong>
+      by <%= book.author %>
     </li>
   <% end %>
 </ul>
