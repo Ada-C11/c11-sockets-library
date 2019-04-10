@@ -23,6 +23,23 @@ header h1 {
 }
 
 nav .icon {
-  width: 100px;
-  height: 100px;
+  height: 2em;
+}
+
+nav li.nav-icon {
+  padding: .75em;
+}
+
+nav ul {
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+}
+
+nav li {
+  border: 1px solid black;
+  padding: 1em;
+  // margin-left: 1em;
+  // margin-right: 1em;
 }
