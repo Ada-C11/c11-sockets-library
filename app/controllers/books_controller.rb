@@ -8,6 +8,12 @@ class BooksController < ApplicationController
     @featured_book = @books.sample
   end
 
+  def new
+    @book = Book.new
+    # @book.title = "default title"
+    # @book.save
+  end
+
   def show
     book_id = params[:id]
     puts "Book ID was #{book_id}"
