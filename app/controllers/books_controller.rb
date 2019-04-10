@@ -16,14 +16,17 @@ class BooksController < ApplicationController
     # "book"=>{"title"=>"Dan Test Book", "author"=>"Test Author"}
     puts "Made it!"
 
-    # binding.pry
+    @book = Book.new
 
-    book = Book.new(
-      title: params["book"]["title"],
-      author: params["book"]["author"],
-    )
+    unless params["book"]
+      render :new, status: :bad_request
+      return
+    end
 
-    book.save
+    @book.title = params["book"]["title"],
+    @book.author = params["book"]["author"]
+
+    @book.save
 
     redirect_to books_path
   end

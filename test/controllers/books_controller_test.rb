@@ -89,6 +89,16 @@ describe BooksController do
 
     it "does something if no book data is sent" do
       # Question: what is "does something", and how do we test for it?
+      # Arrange
+      book_data = {}
+
+      # Act
+      expect {
+        post books_path, params: book_data
+      }.wont_change "Book.count"
+
+      # Assert
+      must_respond_with :bad_request
     end
   end
 end
