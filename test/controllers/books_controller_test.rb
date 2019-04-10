@@ -7,7 +7,7 @@ describe BooksController do
       Book.create!(title: "test book")
 
       # Act
-      get "/books"
+      get books_path
 
       # Assert
       must_respond_with :ok
@@ -18,7 +18,7 @@ describe BooksController do
       Book.destroy_all
 
       # Act
-      get "/books"
+      get books_path
 
       # Assert
       must_respond_with :ok
@@ -30,7 +30,7 @@ describe BooksController do
       # TODO come back to this
       book_id = 12345
 
-      get "/books/#{book_id}"
+      get book_path(book_id)
 
       must_respond_with :not_found
     end
@@ -41,7 +41,7 @@ describe BooksController do
 
       # Act: Hey server, can you find the book
       # that we just made
-      get "/books/#{book.id}"
+      get book_path(book.id)
 
       # Assert
       must_respond_with :ok
