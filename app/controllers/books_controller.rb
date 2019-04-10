@@ -16,6 +16,8 @@ class BooksController < ApplicationController
     # "book"=>{"title"=>"Dan Test Book", "author"=>"Test Author"}
     puts "Made it!"
 
+    # binding.pry
+
     book = Book.new(
       title: params["book"]["title"],
       author: params["book"]["author"],

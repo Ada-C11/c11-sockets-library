@@ -47,4 +47,48 @@ describe BooksController do
       must_respond_with :ok
     end
   end
+
+  describe "new" do
+    it "retruns status code 200" do
+      get new_book_path
+      must_respond_with :ok
+    end
+  end
+
+  describe "create" do
+    it "creates a new book" do
+      # Arrange
+      book_data = {
+        book: {
+          title: "Test Book",
+          author: "Test Author",
+        },
+      }
+
+      # Act
+      expect {
+        post books_path, params: book_data
+      }.must_change "Book.count", +1
+
+      # before_book_count = Book.count
+      # post books_path, params: book_data
+      # expect(Book.count).must_equal before_book_count + 1
+
+      # Assert
+      must_respond_with :redirect
+      must_redirect_to books_path
+
+      book = Book.last
+      expect(book.title).must_equal book_data[:book][:title]
+      expect(book.author).must_equal book_data[:book][:author]
+
+      # book_data[:book].keys.each do |key|
+      #   expect(book.attributes[key]).must_equal book_data[:book][key]
+      # end
+    end
+
+    it "does something if no book data is sent" do
+      # Question: what is "does something", and how do we test for it?
+    end
+  end
 end
