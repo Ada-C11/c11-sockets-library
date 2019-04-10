@@ -10,8 +10,20 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
-    # @book.title = "default title"
-    # @book.save
+  end
+
+  def create
+    # "book"=>{"title"=>"Dan Test Book", "author"=>"Test Author"}
+    puts "Made it!"
+
+    book = Book.new(
+      title: params["book"]["title"],
+      author: params["book"]["author"],
+    )
+
+    book.save
+
+    redirect_to books_path
   end
 
   def show
