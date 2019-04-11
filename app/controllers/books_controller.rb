@@ -40,4 +40,19 @@ class BooksController < ApplicationController
       head :not_found
     end
   end
+
+  def destroy
+    book_id = params[:id]
+
+    book = Book.find_by(id: book_id)
+
+    unless book
+      head :not_found
+      return
+    end
+
+    book.destroy
+
+    redirect_to books_path
+  end
 end

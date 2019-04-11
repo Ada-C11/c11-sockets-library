@@ -101,4 +101,39 @@ describe BooksController do
       must_respond_with :bad_request
     end
   end
+
+  describe "destroy" do
+    it "removes the book from the database" do
+      # Arrange
+      book = Book.create!(title: "test_book")
+
+      # Act
+      expect {
+        delete book_path(book)
+      }.must_change "Book.count", -1
+
+      # Assert
+      must_respond_with :redirect
+      must_redirect_to books_path
+
+      after_book = Book.find_by(id: book.id)
+      expect(after_book).must_be_nil
+    end
+
+    it "returns a 404 if the book does not exist" do
+      # Arrange
+      book_id = 123456
+
+      # Assumptions
+      expect(Book.find_by(id: book_id)).must_be_nil
+
+      # Act
+      expect {
+        delete book_path(book_id)
+      }.wont_change "Book.count"
+
+      # Assert
+      must_respond_with :not_found
+    end
+  end
 end
