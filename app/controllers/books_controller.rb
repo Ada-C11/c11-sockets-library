@@ -1,5 +1,3 @@
-
-
 class BooksController < ApplicationController
   def index
     # Load a list of books from somewhere
@@ -13,9 +11,11 @@ class BooksController < ApplicationController
   end
 
   def create
+    # Params will contain data like this:
     # "book"=>{"title"=>"Dan Test Book", "author"=>"Test Author"}
     puts "Made it!"
 
+    # TODO: clean this up when we know more
     @book = Book.new
 
     unless params["book"]
@@ -33,11 +33,6 @@ class BooksController < ApplicationController
 
   def show
     book_id = params[:id]
-    puts "Book ID was #{book_id}"
-    puts "Result of .to_i: #{book_id.to_i}"
-    # binding.pry
-
-    # does_not_exist
 
     @book = Book.find_by(id: book_id)
 
@@ -45,8 +40,4 @@ class BooksController < ApplicationController
       head :not_found
     end
   end
-
-  # def test
-  #   binding.pry
-  # end
 end
