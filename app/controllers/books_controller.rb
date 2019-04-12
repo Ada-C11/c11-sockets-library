@@ -41,6 +41,19 @@ class BooksController < ApplicationController
     end
   end
 
+  def update
+    # TODO error handling of any sort
+    book = Book.find_by(id: params[:id])
+
+    # Update includes a save! Don't need to do it ourselves
+    book.update(
+      title: params["book"]["title"],
+      author: params["book"]["title"],
+    )
+
+    redirect_to book_path(book)
+  end
+
   def destroy
     book_id = params[:id]
 

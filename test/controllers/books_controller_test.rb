@@ -102,6 +102,28 @@ describe BooksController do
     end
   end
 
+  describe "update" do
+    it "changes the data on the model" do
+      # Arrange
+      book = Book.create!(title: "original")
+      book_data = {
+        book: {
+          title: "changed",
+        },
+      }
+
+      # Act
+      patch book_path(book), params: book_data
+
+      # Assert
+      must_respond_with :redirect
+      must_redirect_to book_path(book)
+
+      book.reload
+      expect(book.title).must_equal(book_data[:book][:title])
+    end
+  end
+
   describe "destroy" do
     it "removes the book from the database" do
       # Arrange
@@ -110,7 +132,7 @@ describe BooksController do
       # Act
       expect {
         delete book_path(book)
-      }.must_change "Book.count", -1
+      }.must_change "Book.size", -1
 
       # Assert
       must_respond_with :redirect
