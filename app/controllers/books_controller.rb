@@ -15,16 +15,7 @@ class BooksController < ApplicationController
     # "book"=>{"title"=>"Dan Test Book", "author"=>"Test Author"}
     puts "Made it!"
 
-    # TODO: clean this up when we know more
-    @book = Book.new
-
-    unless params["book"]
-      render :new, status: :bad_request
-      return
-    end
-
-    @book.title = params["book"]["title"],
-    @book.author = params["book"]["author"]
+    @book = Book.new(book_params)
 
     @book.save
 
@@ -41,15 +32,26 @@ class BooksController < ApplicationController
     end
   end
 
+  def edit
+    book_id = params[:id]
+
+    @book = Book.find_by(id: book_id)
+
+    unless @book
+      head :not_found
+    end
+  end
+
   def update
-    # TODO error handling of any sort
     book = Book.find_by(id: params[:id])
 
+    unless book
+      head :not_found
+      return
+    end
+
     # Update includes a save! Don't need to do it ourselves
-    book.update(
-      title: params["book"]["title"],
-      author: params["book"]["title"],
-    )
+    book.update(book_params)
 
     redirect_to book_path(book)
   end
@@ -67,5 +69,11 @@ class BooksController < ApplicationController
     book.destroy
 
     redirect_to books_path
+  end
+
+  private
+
+  def book_params
+    return params.require(:book).permit(:title, :author)
   end
 end

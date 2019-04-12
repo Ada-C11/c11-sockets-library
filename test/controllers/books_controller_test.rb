@@ -87,9 +87,11 @@ describe BooksController do
       # end
     end
 
-    it "does something if no book data is sent" do
+    it "sends back bad_request if no book data is sent" do
+      skip
       # Question: what is "does something", and how do we test for it?
       # Arrange
+      # TODO: figure out how to make this test fail once we've talke about validations
       book_data = {}
 
       # Act
@@ -132,7 +134,7 @@ describe BooksController do
       # Act
       expect {
         delete book_path(book)
-      }.must_change "Book.size", -1
+      }.must_change "Book.count", -1
 
       # Assert
       must_respond_with :redirect

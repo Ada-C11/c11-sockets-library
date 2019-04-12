@@ -21,6 +21,7 @@
         <%= link_to book.title, book_path(book) %>
       </strong>
       by <%= book.author %>
+      <%= link_to "Edit", edit_book_path(book) %>
       <%= link_to "Delete", book_path(book), method: :delete, data: { confirm: "Really really?" } %>
     </li>
   <% end %>

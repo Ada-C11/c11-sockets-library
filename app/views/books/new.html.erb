@@ -1,18 +1,3 @@
 <h2>New Book Form</h2>
 
-<%= form_with model: @book, class: 'book-form' do |f| %>
-  <p>Please fill out this book's information</p>
-
-  <div>
-    <%= f.label :title, "Please enter a title" %>
-    <%= f.text_field :title, placeholder: "A Book" %>
-  </div>
-
-  <div>
-    <%= f.label :author %>
-    <%= f.text_field :author, placeholder: "Ann Author" %>
-  </div>
-
-  <%= f.submit "Shelve it!" %>
-
-<% end %>
+<%= render partial: 'form', locals: { button_text: "Shelve it!" } %>
