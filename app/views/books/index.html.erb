@@ -7,7 +7,7 @@
 <section class="featured-book">
   <% if @featured_book %>
     <p>
-      Featured book: <%= @featured_book.title %> by <%= @featured_book.author %>
+      Featured book: <%= @featured_book.title %> by <%= @featured_book.author.name %>
     </p>
   <% else %>
     <p>No featured book today :(</p>
@@ -20,7 +20,7 @@
       <strong>
         <%= link_to book.title, book_path(book) %>
       </strong>
-      by <%= book.author %>
+      by <%= book.author.name %>
       <%= link_to "Edit", edit_book_path(book) %>
       <%= link_to "Delete", book_path(book), method: :delete, data: { confirm: "Really really?" } %>
     </li>

@@ -8,7 +8,7 @@
 
   <div>
     <%= f.label :author %>
-    <%= f.text_field :author, placeholder: "Ann Author" %>
+    <%= f.select :author_id, Author.all.map{ |auth| [auth.name, auth.id] } %>
   </div>
 
   <%= f.submit button_text %>
