@@ -91,11 +91,12 @@ describe BooksController do
     end
 
     it "sends back bad_request if no book data is sent" do
-      skip
-      # Question: what is "does something", and how do we test for it?
-      # Arrange
-      # TODO: figure out how to make this test fail once we've talke about validations
-      book_data = {}
+      book_data = {
+        book: {
+          title: "",
+        },
+      }
+      expect(Book.new(book_data[:book])).wont_be :valid?
 
       # Act
       expect {

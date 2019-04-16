@@ -21,7 +21,7 @@ class BooksController < ApplicationController
     if successful
       redirect_to books_path
     else
-      render :new
+      render :new, status: :bad_request
     end
   end
 
@@ -57,7 +57,7 @@ class BooksController < ApplicationController
     if @book.update(book_params)
       redirect_to book_path(@book)
     else
-      render :edit
+      render :edit, status: :bad_request
     end
   end
 
