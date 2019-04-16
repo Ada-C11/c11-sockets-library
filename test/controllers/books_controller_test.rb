@@ -122,13 +122,18 @@ describe BooksController do
   end
 
   describe "update" do
-    it "changes the data on the model" do
-      # Arrange
-      book_data = {
+    let(:book_data) {
+      {
         book: {
           title: "changed",
         },
       }
+    }
+    it "changes the data on the model" do
+      # Assumptions
+      @book.assign_attributes(book_data[:book])
+      expect(@book).must_be :valid?
+      @book.reload
 
       # Act
       patch book_path(@book), params: book_data
@@ -139,6 +144,28 @@ describe BooksController do
 
       @book.reload
       expect(@book.title).must_equal(book_data[:book][:title])
+    end
+
+    it "responds with NOT FOUND for a fake book" do
+      book_id = Book.last.id + 1
+      patch book_path(book_id), params: book_data
+      must_respond_with :not_found
+    end
+
+    it "responds with BAD REQUEST for bad data" do
+      # Arrange
+      book_data[:book][:title] = ""
+
+      # Assumptions
+      @book.assign_attributes(book_data[:book])
+      expect(@book).wont_be :valid?
+      @book.reload
+
+      # Act
+      patch book_path(@book), params: book_data
+
+      # Assert
+      must_respond_with :bad_request
     end
   end
 
