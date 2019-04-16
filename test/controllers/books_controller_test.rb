@@ -108,6 +108,19 @@ describe BooksController do
     end
   end
 
+  describe "edit" do
+    it "responds with OK for a real book" do
+      get edit_book_path(@book)
+      must_respond_with :ok
+    end
+
+    it "responds with NOT FOUND for a fake book" do
+      book_id = Book.last.id + 1
+      get edit_book_path(book_id)
+      must_respond_with :not_found
+    end
+  end
+
   describe "update" do
     it "changes the data on the model" do
       # Arrange
