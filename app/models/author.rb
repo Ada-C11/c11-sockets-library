@@ -3,5 +3,8 @@ class Author < ApplicationRecord
 
   def cool_new_method ()
     puts "wow, neat"
+
+    puts "this is a bug"
+
   end
 end
