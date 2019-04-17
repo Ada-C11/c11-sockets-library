@@ -17,9 +17,12 @@ class BooksController < ApplicationController
 
     @book = Book.new(book_params)
 
-    @book.save
-
-    redirect_to books_path
+    successful = @book.save
+    if successful
+      redirect_to books_path
+    else
+      render :new, status: :bad_request
+    end
   end
 
   def show
@@ -43,17 +46,19 @@ class BooksController < ApplicationController
   end
 
   def update
-    book = Book.find_by(id: params[:id])
+    @book = Book.find_by(id: params[:id])
 
-    unless book
+    unless @book
       head :not_found
       return
     end
 
     # Update includes a save! Don't need to do it ourselves
-    book.update(book_params)
-
-    redirect_to book_path(book)
+    if @book.update(book_params)
+      redirect_to book_path(@book)
+    else
+      render :edit, status: :bad_request
+    end
   end
 
   def destroy

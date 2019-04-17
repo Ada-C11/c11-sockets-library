@@ -1,10 +1,13 @@
 require "test_helper"
 
 describe BooksController do
+  before do
+    @author = Author.create!(name: "test author")
+    @book = Book.create!(title: "test book", author: @author)
+  end
   describe "index" do
     it "renders without crashing" do
       # Arrange
-      Book.create!(title: "test book")
 
       # Act
       get books_path
@@ -37,11 +40,11 @@ describe BooksController do
 
     it "works for a book that exists" do
       # Arrange: set up a book
-      book = Book.create!(title: "test book")
+      # See before block above
 
       # Act: Hey server, can you find the book
       # that we just made
-      get book_path(book.id)
+      get book_path(@book.id)
 
       # Assert
       must_respond_with :ok
@@ -60,8 +63,8 @@ describe BooksController do
       # Arrange
       book_data = {
         book: {
-          title: "Test Book",
-          author: "Test Author",
+          title: "Create a new book",
+          author_id: @author.id,
         },
       }
 
@@ -80,7 +83,7 @@ describe BooksController do
 
       book = Book.last
       expect(book.title).must_equal book_data[:book][:title]
-      expect(book.author).must_equal book_data[:book][:author]
+      expect(book.author).must_equal @author
 
       # book_data[:book].keys.each do |key|
       #   expect(book.attributes[key]).must_equal book_data[:book][key]
@@ -88,11 +91,12 @@ describe BooksController do
     end
 
     it "sends back bad_request if no book data is sent" do
-      skip
-      # Question: what is "does something", and how do we test for it?
-      # Arrange
-      # TODO: figure out how to make this test fail once we've talke about validations
-      book_data = {}
+      book_data = {
+        book: {
+          title: "",
+        },
+      }
+      expect(Book.new(book_data[:book])).wont_be :valid?
 
       # Act
       expect {
@@ -104,43 +108,79 @@ describe BooksController do
     end
   end
 
+  describe "edit" do
+    it "responds with OK for a real book" do
+      get edit_book_path(@book)
+      must_respond_with :ok
+    end
+
+    it "responds with NOT FOUND for a fake book" do
+      book_id = Book.last.id + 1
+      get edit_book_path(book_id)
+      must_respond_with :not_found
+    end
+  end
+
   describe "update" do
-    it "changes the data on the model" do
-      # Arrange
-      book = Book.create!(title: "original")
-      book_data = {
+    let(:book_data) {
+      {
         book: {
           title: "changed",
         },
       }
+    }
+    it "changes the data on the model" do
+      # Assumptions
+      @book.assign_attributes(book_data[:book])
+      expect(@book).must_be :valid?
+      @book.reload
 
       # Act
-      patch book_path(book), params: book_data
+      patch book_path(@book), params: book_data
 
       # Assert
       must_respond_with :redirect
-      must_redirect_to book_path(book)
+      must_redirect_to book_path(@book)
 
-      book.reload
-      expect(book.title).must_equal(book_data[:book][:title])
+      @book.reload
+      expect(@book.title).must_equal(book_data[:book][:title])
+    end
+
+    it "responds with NOT FOUND for a fake book" do
+      book_id = Book.last.id + 1
+      patch book_path(book_id), params: book_data
+      must_respond_with :not_found
+    end
+
+    it "responds with BAD REQUEST for bad data" do
+      # Arrange
+      book_data[:book][:title] = ""
+
+      # Assumptions
+      @book.assign_attributes(book_data[:book])
+      expect(@book).wont_be :valid?
+      @book.reload
+
+      # Act
+      patch book_path(@book), params: book_data
+
+      # Assert
+      must_respond_with :bad_request
     end
   end
 
   describe "destroy" do
     it "removes the book from the database" do
-      # Arrange
-      book = Book.create!(title: "test_book")
-
       # Act
       expect {
-        delete book_path(book)
+        delete book_path(@book)
       }.must_change "Book.count", -1
 
       # Assert
       must_respond_with :redirect
       must_redirect_to books_path
 
-      after_book = Book.find_by(id: book.id)
+      after_book = Book.find_by(id: @book.id)
       expect(after_book).must_be_nil
     end
 
