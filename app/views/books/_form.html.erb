@@ -22,8 +22,12 @@
   </div>
 
   <div>
-    <%= f.label :author %>
-    <%= f.select :author_id, Author.all.map{ |auth| [auth.name, auth.id] } %>
+    <% unless @book.author %>
+      <%= f.label :author %>
+      <%= f.select :author_id, Author.all.map{ |auth| [auth.name, auth.id] } %>
+    <% else %>
+      <%= f.hidden_field :author_id %>
+    <% end %>
   </div>
 
   <%= f.submit button_text %>

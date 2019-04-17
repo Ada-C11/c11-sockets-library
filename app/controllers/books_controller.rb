@@ -1,13 +1,37 @@
 class BooksController < ApplicationController
   def index
     # Load a list of books from somewhere
-    @books = Book.all
+    if params[:author_id]
+      # @books = Book.where(author_id: params[:author_id])
+
+      # - or -
+
+      author = Author.find_by(id: params[:author_id])
+      if author
+        @books = author.books
+      else
+        head :not_found
+        return
+      end
+    else
+      @books = Book.all
+    end
 
     @featured_book = @books.sample
   end
 
   def new
-    @book = Book.new
+    if params[:author_id]
+      @author = Author.find_by(id: params[:author_id])
+      if @author
+        @book = @author.books.new
+      else
+        head :not_found
+        return
+      end
+    else
+      @book = Book.new
+    end
   end
 
   def create

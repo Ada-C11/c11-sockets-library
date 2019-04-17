@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   # delete "/books/:id", to: "books#destroy"
 
   resources :books #, except: [:destroy]
-  resources :authors
+
+  resources :authors do
+    resources :books, only: [:index, :new]
+  end
 end
