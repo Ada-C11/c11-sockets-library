@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :books #, except: [:destroy]
 
   resources :authors do
+    # Why only index and new?
     resources :books, only: [:index, :new]
   end
 end
