@@ -1,10 +1,14 @@
 require "test_helper"
 
 describe Book do
-  let(:book) { Book.new }
+  before do 
+    author = Author.new( {name: "N K Jemisin"} )
+    @book = Book.new({author: author, title: "How long 'til black future month?", })
 
-  it "must be valid" do
-    skip
-    value(book).must_be :valid?
+  end
+  it "must be valid with good data" do
+    result = @book.valid?
+
+    expect(result).must_equal true
   end
 end

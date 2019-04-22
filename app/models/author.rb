@@ -1,5 +1,6 @@
 class Author < ApplicationRecord
   has_many :books
+  validates :name, uniqueness: true
 
   def first_published
     books_with_year = self.books.where.not(publication_date: nil)
