@@ -2,7 +2,7 @@ require "test_helper"
 
 describe BooksController do
   before do
-    @author = Author.create!(name: "test author")
+    @author = Author.first
     @book = Book.create!(title: "test book", author: @author)
   end
   describe "index" do

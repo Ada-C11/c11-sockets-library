@@ -1,7 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+metz:
+  name: Sandi Metz
+butler:
+  name: Octavia E. Butler
 
-one:
-  name: MyString
-
-two:
-  name: MyString
+# The key can be anything you want
+p_metz:
+  name: Phillipa Metz
