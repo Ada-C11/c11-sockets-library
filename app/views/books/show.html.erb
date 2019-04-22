@@ -10,3 +10,14 @@
 <p>
 <%= @book.description %>
 </p>
+
+<section class="book-genres">
+  <p>Genres:</p>
+  <ul>
+    <% @book.genres.each do |genre| %>
+      <li>
+        <%= genre.name %>
+      </li>
+    <% end %>
+  </ul>
+</section>
