@@ -23,6 +23,7 @@
       by <%= book.author.name %>
       <%= link_to "Edit", edit_book_path(book) %>
       <%= link_to "Delete", book_path(book), method: :delete, data: { confirm: "Really really?" } %>
+      <%#= link_to "See under the nested route", author_book_path(book.author, book) %>
     </li>
   <% end %>
 </ul>
