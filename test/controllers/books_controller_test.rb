@@ -81,6 +81,8 @@ describe BooksController do
       must_respond_with :redirect
       must_redirect_to books_path
 
+      check_flash
+
       book = Book.last
       expect(book.title).must_equal book_data[:book][:title]
       expect(book.author).must_equal @author
@@ -105,6 +107,8 @@ describe BooksController do
 
       # Assert
       must_respond_with :bad_request
+
+      check_flash(:error)
     end
   end
 
@@ -142,6 +146,8 @@ describe BooksController do
       must_respond_with :redirect
       must_redirect_to book_path(@book)
 
+      check_flash
+
       @book.reload
       expect(@book.title).must_equal(book_data[:book][:title])
     end
@@ -166,6 +172,8 @@ describe BooksController do
 
       # Assert
       must_respond_with :bad_request
+
+      check_flash(:error)
     end
   end
 
@@ -179,6 +187,8 @@ describe BooksController do
       # Assert
       must_respond_with :redirect
       must_redirect_to books_path
+
+      check_flash
 
       after_book = Book.find_by(id: @book.id)
       expect(after_book).must_be_nil

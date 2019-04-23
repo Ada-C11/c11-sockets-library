@@ -43,8 +43,12 @@ class BooksController < ApplicationController
 
     successful = @book.save
     if successful
+      flash[:status] = :success
+      flash[:message] = "successfully saved a book with ID #{@book.id}"
       redirect_to books_path
     else
+      flash.now[:status] = :error
+      flash.now[:message] = "Could not save book"
       render :new, status: :bad_request
     end
   end
@@ -79,8 +83,12 @@ class BooksController < ApplicationController
 
     # Update includes a save! Don't need to do it ourselves
     if @book.update(book_params)
+      flash[:status] = :success
+      flash[:message] = "Successfully updated book #{@book.id}"
       redirect_to book_path(@book)
     else
+      flash.now[:status] = :error
+      flash.now[:message] = "Could not save book #{@book.id}"
       render :edit, status: :bad_request
     end
   end
@@ -97,6 +105,8 @@ class BooksController < ApplicationController
 
     book.destroy
 
+    flash[:status] = :success
+    flash[:message] = "Successfully deleted book #{book.id}"
     redirect_to books_path
   end
 

@@ -37,6 +37,9 @@
     </header>
 
     <main>
+      <section class="flash <%= flash[:status] %>">
+        <%= flash[:message] %>
+      </section>
       <%= yield %>
     </main>
 
