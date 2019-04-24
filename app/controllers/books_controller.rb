@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :find_book, only: [:show, :edit, :update, :destroy]
+
   def index
     # Load a list of books from somewhere
     if params[:author_id]
@@ -53,34 +55,12 @@ class BooksController < ApplicationController
     end
   end
 
-  def show
-    book_id = params[:id]
+  # Show and Edit are entirely the find_books helper
+  # def show; end
 
-    @book = Book.find_by(id: book_id)
-
-    unless @book
-      head :not_found
-    end
-  end
-
-  def edit
-    book_id = params[:id]
-
-    @book = Book.find_by(id: book_id)
-
-    unless @book
-      head :not_found
-    end
-  end
+  # def edit; end
 
   def update
-    @book = Book.find_by(id: params[:id])
-
-    unless @book
-      head :not_found
-      return
-    end
-
     # Update includes a save! Don't need to do it ourselves
     if @book.update(book_params)
       flash[:status] = :success
@@ -94,15 +74,6 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    book_id = params[:id]
-
-    book = Book.find_by(id: book_id)
-
-    unless book
-      head :not_found
-      return
-    end
-
     book.destroy
 
     flash[:status] = :success
@@ -114,5 +85,14 @@ class BooksController < ApplicationController
 
   def book_params
     return params.require(:book).permit(:title, :author_id, genre_ids: [])
+  end
+
+  def find_book
+    @book = Book.find_by(id: params[:id])
+
+    unless @book
+      head :not_found
+      return
+    end
   end
 end
