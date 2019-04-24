@@ -1,18 +1,15 @@
-class AuthorsController < ApplicationController
-  def index
-    @authors = Author.all
-  end
+require "pry"
 
-  def show
-    @author = Author.find(params[:id])
+class AuthorsController < ApplicationController
+  before_action :find_author, except: [:index, :new, :create]
+
+  def index
+    do_nada
+    @authors = Author.all
   end
 
   def new
     @author = Author.new
-  end
-
-  def edit
-    @author = Author.find(params[:id])
   end
 
   def create
@@ -25,8 +22,10 @@ class AuthorsController < ApplicationController
     end
   end
 
+  # def show ; end
+  # def edit ; end
+
   def update
-    @author = Author.find(params[:id])
     if @author.update(author_params)
       redirect_to @author, notice: "Author was successfully updated."
     else
@@ -35,9 +34,12 @@ class AuthorsController < ApplicationController
   end
 
   def destroy
-    @author = Author.find(params[:id])
     @author.destroy
     redirect_to authors_url, notice: "Author was successfully destroyed."
+  end
+
+  def do_nada
+    return 5
   end
 
   private
@@ -45,5 +47,10 @@ class AuthorsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def author_params
     return params.require(:author).permit(:name)
+  end
+
+  def find_author
+    binding.pry
+    @author = Author.find(params[:id])
   end
 end
