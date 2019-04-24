@@ -74,10 +74,10 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    book.destroy
+    @book.destroy
 
     flash[:status] = :success
-    flash[:message] = "Successfully deleted book #{book.id}"
+    flash[:message] = "Successfully deleted book #{@book.id}"
     redirect_to books_path
   end
 
