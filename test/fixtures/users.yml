@@ -2,6 +2,14 @@
 
 dan:
   username: droberts
+  uid: 1234
+  provider: github
+  name: Dan Roberts
+  email: dan@adadev.org
 
 devin:
   username: dhelmgren
+  uid: 3456
+  provider: github
+  name: Devin Helmgren
+  email: devin@adadev.org
