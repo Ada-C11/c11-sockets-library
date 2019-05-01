@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
   before_action :find_book, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_login, only: [:index]
+
 
   def index
     # Load a list of books from somewhere
