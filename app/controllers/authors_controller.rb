@@ -1,5 +1,3 @@
-require "pry"
-
 class AuthorsController < ApplicationController
   before_action :find_author, except: [:index, :new, :create]
 
@@ -50,7 +48,6 @@ class AuthorsController < ApplicationController
   end
 
   def find_author
-    binding.pry
     @author = Author.find(params[:id])
   end
 end

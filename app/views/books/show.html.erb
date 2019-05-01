@@ -6,6 +6,9 @@
 <p>
   Author: <%= @book.author.name %> First Published <%= @book.author.first_published%>
 </p>
+<p>
+  This book was added <%= readable_date(@book.created_at)%>
+</p>
 
 <p>
 <%= @book.description %>
