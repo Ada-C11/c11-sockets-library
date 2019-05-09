@@ -45,6 +45,7 @@ end
 group :development do
   # Adding this for a readline issue that prevents rails console from opening
   gem 'rb-readline'
+  gem 'travis'
 end
 
 group :development do
