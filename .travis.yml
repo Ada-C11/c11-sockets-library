@@ -11,4 +11,4 @@ before_script:
   - bin/rails db:migrate
 
 script:
-  - rails test
+  - bin/rails test
