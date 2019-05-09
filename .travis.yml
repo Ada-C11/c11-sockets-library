@@ -1,14 +1,17 @@
 language: ruby
-
 rvm:
-  - 2.5.1
-
+- 2.5.1
 services:
-  - postgresql
-
+- postgresql
 before_script:
-  - bin/rails db:create
-  - bin/rails db:migrate
-
+- bin/rails db:create
+- bin/rails db:migrate
 script:
-  - bin/rails test
+- bin/rails test
+deploy:
+  provider: heroku
+  api_key:
+    secure: aKtfqkc/my7cuyE5BrRjdZL8JSAk+s7A3XjU2Qwplni5QUmmLETgoHmhvwjYXrlJPq/W+zVwb6SDBAeft2js7rhz9b8QCWSV2cqmWSvbsBMfIanWjFQpOdRlqTk77JIuCk6j4cljhtsDag4IGx4QgGUCizNOAqqEGUauN8x789d1MSlyZ65vZF4nUFB41WetBX4irvL8k5KRxwDhqlHQQuSR/wskVl2lA0jX4RKOmi8PoMPSIhTEMdttivu0oDr12NnRz9VSHMe+lXMbQj31e785VtCzkwPvwpvSfSVhEl2c2kymva92Lnc5yrMxMwVhKtt3GiLfVE5rZ4KXozVBoJMT4qW08oMthg514C0HzSFy/RoCa6KMjF3Evwr9DDsYiDHymhWDeDZyw+ihXeiPPwwL6q83x/rRI3UboAZgktqmr7s8hXnnwgAY6iH/2Nq8oo8A4fj++0C0ecfrseU9R4CXlU/2tS36XodWOOGiROeEg+G+AyNSWWv/ZCNPsyOdtoXGr4ndnN04xW5TQoL3TfS9g5aquFOmPItvYB+3OfNJ4rjcre93UgNupC5M0cLR432JVWsgwQHBNs/IHG3v5xtDBpzUSPoXvdK82rB7tJ/6dQMh17XqMot4d0YI0ugLFIDwRMxp5jLJA1daZHc8btqu7d/GhMVlZMqwSTcCN8Q=
+  app: c11-sockets-library
+  on:
+    repo: Ada-C11/c11-sockets-library
